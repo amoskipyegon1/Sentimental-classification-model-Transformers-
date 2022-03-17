@@ -12,3 +12,11 @@ tx = ['It ran at the same time as some other programs about school life ,']
 tokens = tokenizers.tokenize(tx)
 
 print(tokens.numpy())
+
+print('\n')
+
+strings = tokenizers.detokenize(tokens)
+
+print(strings)
+
+print('\n')
