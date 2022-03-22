@@ -6,7 +6,7 @@ import re
 path_train = 'aclImdb_v1/train'
 path_test = 'aclImdb_v1/test'
 
-data_arr, data_labels = [], [], [], []
+data_arr, data_labels = [], []
 
 # read files
 
@@ -23,7 +23,9 @@ for x in os.listdir(path_train):
                         s = line.replace('<br />', '')
                         s = re.sub('[.][.][.]*', '', s)
                         s = re.sub("([.,?!()])", r' \1', s)
-                        s = s.strip()
+                        s = s.split()
+                        s = s[:60]
+                        s = " ".join(s)
                         lines.append(s)
                         data_arr.append(lines)
                         lines= []
@@ -41,7 +43,9 @@ for x in os.listdir(path_train):
                         s = line.replace('<br />', '')
                         s = re.sub('[.][.][.]*', '', s)
                         s = re.sub("([.,?!()])", r' \1', s)
-                        s = s.strip()
+                        s = s.split()
+                        s = s[:60]
+                        s = " ".join(s)
                         lines.append(s)
                         data_arr.append(lines)
                         lines = []
@@ -52,6 +56,10 @@ for x in os.listdir(path_train):
 
 dataset = tf.data.Dataset.from_tensor_slices((data_arr, data_labels))
 
+dataset = dataset.batch(32).shuffle(16, reshuffle_each_iteration=True)
+
 print('\n')
+
 print(dataset)
 
+print('\n')
